@@ -6,13 +6,15 @@ import Checkoutwizard from '../components/CheckoutWizard'
 import Layout from '../components/Layout'
 import { Store } from '../utils/Store'
 
-export default function PaymentScrean() {
+export default function PaymentScreen() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('KakaoPay')
 
   const { state, dispatch } = useContext(Store)
   const { cart } = state
   const { shippingAddress, paymentMethod } = cart
+
   const router = useRouter()
+
   const submitHandler = (e) => {
     e.preventDefault()
     if (!selectedPaymentMethod) {
@@ -21,11 +23,14 @@ export default function PaymentScrean() {
     dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod })
     Cookies.set(
       'cart',
-      JSON.stringify({ ...cart, paymentMethod: selectedPaymentMethod })
+      JSON.stringify({
+        ...cart,
+        paymentMethod: selectedPaymentMethod,
+      })
     )
+
     router.push('/placeorder')
   }
-
   useEffect(() => {
     if (!shippingAddress.address) {
       return router.push('/shipping')
@@ -68,3 +73,5 @@ export default function PaymentScrean() {
     </Layout>
   )
 }
+
+PaymentScreen.auth = true
