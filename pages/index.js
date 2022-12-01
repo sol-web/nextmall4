@@ -19,10 +19,12 @@ export default function Home({ products }) {
 
     if (data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock. 상품이 부족합니다')
+      //arlert('Sotty')
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
 
-    toast.success('Product added to the cart')
+    toast.success('Product added to the cart') // !!!!!!!! 틀 확인 할 것
+    //arlert('Sorry')
   }
 
   return (
